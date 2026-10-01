@@ -1,0 +1,33 @@
+name: "Terraform Manual Teardown"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Type 'DESTROY-INFRASTRUCTURE' to confirm resource deletion"
+        required: true
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  destroy:
+    name: "Terraform Destroy"
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirmation == 'DESTROY-INFRASTRUCTURE'
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.0"
+
+      - name: "Terraform Init"
+        run: terraform init
+
+      - name: "Terraform Destroy"
+        run: terraform destroy -auto-approve

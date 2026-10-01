@@ -1,0 +1,28 @@
+# ==============================================================================
+# Terraform Variables Example - terraform.tfvars.example
+# ==============================================================================
+# Copy this file to terraform.tfvars and customize with your environment values:
+# cp terraform.tfvars.example terraform.tfvars
+# ==============================================================================
+
+aws_region          = "us-east-1"
+environment         = "dev"
+project_name        = "terraform-provisioners-guide"
+vpc_cidr            = "10.0.0.0/16"
+public_subnet_cidr  = "10.0.1.0/24"
+private_subnet_cidr = "10.0.2.0/24"
+availability_zone   = "us-east-1a"
+instance_type       = "t3.micro"
+app_port            = 80
+
+# SECURITY BEST PRACTICE: Replace with your specific public IP (e.g., ["203.0.113.45/32"])
+# Never keep 0.0.0.0/0 open for SSH in production environments!
+ssh_allowed_cidrs = ["0.0.0.0/0"]
+
+# Toggle provisioning strategy:
+# "provisioners" -> Uses Terraform file + remote-exec + local-exec
+# "user-data"    -> Uses cloud-init cloud-provider native EC2 user_data (Recommended in Prod)
+provisioning_mode = "provisioners"
+
+# Optional: supply an existing AWS key pair name, or leave null to auto-generate
+key_name = null

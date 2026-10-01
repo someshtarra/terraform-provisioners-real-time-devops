@@ -1,0 +1,21 @@
+[Unit]
+Description=Enterprise Demo Microservice
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/opt/app
+ExecStart=/usr/bin/python3 -m http.server 8080
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+EnvironmentFile=/etc/default/app.env
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
