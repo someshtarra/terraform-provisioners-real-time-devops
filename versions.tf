@@ -30,7 +30,7 @@ provider "aws" {
       Project     = "Terraform-Provisioners-Guide"
       ManagedBy   = "Terraform"
       Owner       = "DevOps-Team"
-      Repository  = "terraform-provisioners-guide"
+      Repository  = "terraform-provisioners-real-time-devops"
     }
   }
 }

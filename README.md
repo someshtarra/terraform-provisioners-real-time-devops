@@ -276,8 +276,8 @@ This end-to-end project provisions an automated, production-styled AWS Nginx app
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/terraform-provisioners-guide.git
-cd terraform-provisioners-guide
+git clone https://github.com/someshtarra/terraform-provisioners-real-time-devops.git
+cd terraform-provisioners-real-time-devops
 
 # Initialize Terraform modules and provider plugins
 make init
