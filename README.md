@@ -143,19 +143,18 @@ sequenceDiagram
     CLI->>VM: File Provisioner (Upload nginx.conf & bootstrap.sh)
     CLI->>VM: Remote-Exec Provisioner (Run bootstrap script)
 
-    alt Provisioner Exit Code == 0 (Success)
+    alt Scenario A: Provisioner Succeeded (Exit Code 0)
         VM-->>CLI: Execution Succeeded
         CLI->>CLI: Execute Local-Exec (Write audit record / Inventory)
         CLI->>State: Write resource state as CREATED
         Note over State: Resource Healthy & Monitored
-    else Provisioner Exit Code != 0 (Failure)
+    else Scenario B: Provisioner Failed (on_failure = fail)
         VM-->>CLI: Execution Failed
-        alt on_failure = fail (Default)
-            CLI->>State: Mark Resource as TAINTED
-            Note over State: Next apply will DESTROY and RECREATE instance!
-        else on_failure = continue
-            CLI->>State: Log Warning; Mark Resource as CREATED
-        end
+        CLI->>State: Mark Resource as TAINTED
+        Note over State: Next apply will DESTROY and RECREATE instance!
+    else Scenario C: Provisioner Failed (on_failure = continue)
+        VM-->>CLI: Execution Failed
+        CLI->>State: Log Warning; Mark Resource as CREATED
     end
 
     Note over CLI,AWS: 3. Resource Destruction Phase (when = destroy)
